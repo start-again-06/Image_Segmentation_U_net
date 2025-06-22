@@ -15,11 +15,17 @@ This project demonstrates the creation and training of a **U-Net** model for **s
 ---
 
 ## 🗂️ Project Structure
+
 ├── data/
-│   ├── CameraRGB/           # RGB input images
-│   └── CameraMask/          # Segmentation masks
-├── utils/                   # Utility functions (optional)
-├── notebook.py or main.py   # Main model implementation
+
+│   ├── CameraRGB/  
+         
+│   └── CameraMask/
+         
+├── utils/      
+            
+├── notebook.py or main.py 
+ 
 
 ---
 
