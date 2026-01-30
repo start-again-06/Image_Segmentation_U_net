@@ -1,94 +1,65 @@
-# 🧠 U-Net for Semantic Segmentation in TensorFlow/Keras
+U-Net Semantic Segmentation with TensorFlow/Keras  
+A comprehensive computer vision project that implements the U-Net architecture for pixel-wise semantic segmentation using TensorFlow and Keras. The project focuses on dense prediction through an encoder–decoder network with skip connections, enabling accurate multi-class segmentation of driving scene images.
 
-This project demonstrates the creation and training of a **U-Net** model for **semantic segmentation** using TensorFlow and Keras. It includes data preprocessing, model construction, training, and visualization.
+## Features
+- End-to-end U-Net semantic segmentation pipeline  
+- Custom data pipeline using `tf.data.Dataset`  
+- Multi-class segmentation with sparse categorical labels  
+- Encoder–decoder architecture with skip connections  
+- Visualization of predictions against ground truth masks  
+- Modular and educational implementation  
 
----
+## Model & Framework
+- Model: U-Net  
+- Framework: TensorFlow 2.x / Keras  
+- Task: Multi-class semantic segmentation  
+- Input Shape: 96 × 128 × 3 (RGB)  
+- Output: 96 × 128 segmentation mask  
+- Classes: 23 semantic categories  
 
-## 📌 Overview
+## Dataset
+- Source: CARLA Driving Simulator  
+- Inputs: RGB camera images  
+- Targets: Pixel-wise segmentation masks  
+- Preprocessing: resizing, normalization, mask channel reduction  
 
-- **Framework**: TensorFlow 2.x / Keras
-- **Architecture**: U-Net (encoder-decoder with skip connections)
-- **Dataset**: Carla driving simulator RGB images and segmentation masks
-- **Input Size**: 96x128 RGB images
-- **Output**: 96x128 mask with 23 class categories
+## Core Components
+- Efficient data loading and preprocessing using `tf.data`  
+- Encoder blocks with convolution, ReLU, and max-pooling  
+- Decoder blocks with transposed convolutions and skip connections  
+- Final 1×1 convolution layer for multi-class logits  
 
----
+## Training Configuration
+- Loss: Sparse Categorical Crossentropy (from logits)  
+- Optimizer: Adam  
+- Epochs: 40  
+- Batch Size: 32  
+- Shuffling enabled with buffer size 500  
 
-## 🗂️ Project Structure
+## Evaluation & Visualization
+- Visual comparison of input images, ground truth masks, and predictions  
+- Accuracy trend visualization during training  
+- Batch-wise prediction inspection utilities  
 
-├── data/
 
-│   ├── CameraRGB/  
-         
-│   └── CameraMask/
-         
-├── utils/      
-            
-├── notebook.py or main.py 
- 
+## Testing & Validation
+- Model architecture verified using `model.summary()`  
+- Layer-wise validation using custom comparator utilities  
+- Encoder and decoder block configurations tested  
 
----
+## Dependencies
+- Python 3.x  
+- TensorFlow 2.x  
+- Keras  
+- NumPy  
+- Matplotlib  
 
-## 🖼️ Data Pipeline
+## References
+- U-Net: Convolutional Networks for Biomedical Image Segmentation – Ronneberger et al.  
+- TensorFlow Documentation – tf.data API  
+- Keras Functional API  
 
-1. **Loading image paths** from the RGB and mask directories
-2. **Parsing & decoding** images using `tf.data.Dataset`
-3. **Preprocessing**: resize to (96, 128), normalize, and reduce mask channels
-4. **Batched and shuffled** dataset for training
+## License
+This project is intended for educational and research purposes.  
+Free to use and modify with proper attribution.
 
----
-
-## 🧱 Model Architecture: U-Net
-
-- **Encoder (Contracting Path)**:
-  - Convolution blocks with ReLU activations
-  - Optional dropout and max-pooling
-- **Decoder (Expanding Path)**:
-  - Transposed convolutions (upsampling)
-  - Skip connections from encoder
-- **Output Layer**:
-  - 1×1 convolution for multi-class logits
-
-### 🔧 Model Summary
-
-- Built using Keras Functional API
-- Supports model inspection with `model.summary()` and test utilities like `comparator()`
-
----
-
-## 🔁 Model Training
-
-- **Loss**: Sparse Categorical Crossentropy (with logits)
-- **Optimizer**: Adam
-- **Epochs**: 40
-- **Batch Size**: 32
-- **Shuffling**: Enabled with buffer size 500
-
-```python
-unet.compile(
-  optimizer='adam',
-  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-  metrics=['accuracy']
-)
-model_history = unet.fit(train_dataset, epochs=40)
-
-📈 Evaluation & Visualization
-
-Visual comparison between input, ground truth, and predicted mask
-
-Real-time plotting of accuracy trends
-
-show_predictions(train_dataset, num=6)
-plt.plot(model_history.history['accuracy'])
-
-🧪 Unit Testing (Sample)
-
-summary(model) outputs tested using a comparator
-
-Verified layer configurations for encoder and decoder blocks
-
-## 📚 References
-
-- Olaf Ronneberger, Philipp Fischer, Thomas Brox – [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)
-- TensorFlow 2.x Documentation – [tf.data API](https://www.tensorflow.org/guide/data)
-- [Keras Functional API](https://keras.io/guides/functional_api/)
